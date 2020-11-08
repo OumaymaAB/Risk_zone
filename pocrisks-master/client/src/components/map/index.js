@@ -22,32 +22,37 @@ const Map = ({ geoData }) => {
       zoom: state.zoom,
     });
 
-    map.on("load", () => {
-      map.loadImage(
-        "https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png",
-        function (error, image) {
-          if (error) throw error;
-          map.addImage("custom-marker", image);
-          map.addSource("points", {
-            type: "geojson",
-            data: geoData,
-          });
-          map.addLayer({
-            id: "points",
-            type: "symbol",
-            source: "points",
-            layout: {
-              "icon-image": "custom-marker",
-              // get the title name from the source's "title" property
-              "text-field": ["get", "title"],
-              "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-              "text-offset": [0, 1.25],
-              "text-anchor": "top",
-            },
-          });
-        }
-      );
-    });
+    geoData &&
+    geoData.features.map((e) => 
+    new L.Marker().setLngLat(e.geometry.coordinates).addTo(map)
+    );
+
+    // map.on("load", () => {
+    //   map.loadImage(
+    //     "https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png",
+    //     function (error, image) {
+    //       if (error) throw error;
+    //       map.addImage("custom-marker", image);
+    //       map.addSource("points", {
+    //         type: "geojson",
+    //         data: geoData,
+    //       });
+    //       map.addLayer({
+    //         id: "points",
+    //         type: "symbol",
+    //         source: "points",
+    //         layout: {
+    //           "icon-image": "custom-marker",
+    //           // get the title name from the source's "title" property
+    //           "text-field": ["get", "title"],
+    //           "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+    //           "text-offset": [0, 1.25],
+    //           "text-anchor": "top",
+    //         },
+    //       });
+    //     }
+    //   );
+    // });
   });
 
   return (
