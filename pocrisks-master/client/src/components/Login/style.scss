@@ -1,0 +1,207 @@
+$container-width: 640px;
+$container-height: 400px;
+$field-text-color: #a7a7a7;
+$google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHdpZHRoPSI1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGc+PHBhdGggZD0ibTEyMCAyNTZjMC0yNS4zNjcgNi45ODktNDkuMTMgMTkuMTMxLTY5LjQ3N3YtODYuMzA4aC04Ni4zMDhjLTM0LjI1NSA0NC40ODgtNTIuODIzIDk4LjcwNy01Mi44MjMgMTU1Ljc4NXMxOC41NjggMTExLjI5NyA1Mi44MjMgMTU1Ljc4NWg4Ni4zMDh2LTg2LjMwOGMtMTIuMTQyLTIwLjM0Ny0xOS4xMzEtNDQuMTEtMTkuMTMxLTY5LjQ3N3oiIGZpbGw9IiNmYmJkMDAiLz48cGF0aCBkPSJtMjU2IDM5Mi02MCA2MCA2MCA2MGM1Ny4wNzkgMCAxMTEuMjk3LTE4LjU2OCAxNTUuNzg1LTUyLjgyM3YtODYuMjE2aC04Ni4yMTZjLTIwLjUyNSAxMi4xODYtNDQuMzg4IDE5LjAzOS02OS41NjkgMTkuMDM5eiIgZmlsbD0iIzBmOWQ1OCIvPjxwYXRoIGQ9Im0xMzkuMTMxIDMyNS40NzctODYuMzA4IDg2LjMwOGM2Ljc4MiA4LjgwOCAxNC4xNjcgMTcuMjQzIDIyLjE1OCAyNS4yMzUgNDguMzUyIDQ4LjM1MSAxMTIuNjM5IDc0Ljk4IDE4MS4wMTkgNzQuOTh2LTEyMGMtNDkuNjI0IDAtOTMuMTE3LTI2LjcyLTExNi44NjktNjYuNTIzeiIgZmlsbD0iIzMxYWE1MiIvPjxwYXRoIGQ9Im01MTIgMjU2YzAtMTUuNTc1LTEuNDEtMzEuMTc5LTQuMTkyLTQ2LjM3N2wtMi4yNTEtMTIuMjk5aC0yNDkuNTU3djEyMGgxMjEuNDUyYy0xMS43OTQgMjMuNDYxLTI5LjkyOCA0Mi42MDItNTEuODg0IDU1LjYzOGw4Ni4yMTYgODYuMjE2YzguODA4LTYuNzgyIDE3LjI0My0xNC4xNjcgMjUuMjM1LTIyLjE1OCA0OC4zNTItNDguMzUzIDc0Ljk4MS0xMTIuNjQgNzQuOTgxLTE4MS4wMnoiIGZpbGw9IiMzYzc5ZTYiLz48cGF0aCBkPSJtMzUyLjE2NyAxNTkuODMzIDEwLjYwNiAxMC42MDYgODQuODUzLTg0Ljg1Mi0xMC42MDYtMTAuNjA2Yy00OC4zNTItNDguMzUyLTExMi42MzktNzQuOTgxLTE4MS4wMi03NC45ODFsLTYwIDYwIDYwIDYwYzM2LjMyNiAwIDcwLjQ3OSAxNC4xNDYgOTYuMTY3IDM5LjgzM3oiIGZpbGw9IiNjZjJkNDgiLz48cGF0aCBkPSJtMjU2IDEyMHYtMTIwYy02OC4zOCAwLTEzMi42NjcgMjYuNjI5LTE4MS4wMiA3NC45OC03Ljk5MSA3Ljk5MS0xNS4zNzYgMTYuNDI2LTIyLjE1OCAyNS4yMzVsODYuMzA4IDg2LjMwOGMyMy43NTMtMzkuODAzIDY3LjI0Ni02Ni41MjMgMTE2Ljg3LTY2LjUyM3oiIGZpbGw9IiNlYjQxMzIiLz48L2c+PC9zdmc+';
+.mapbox {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+  /* .mapboxgl-marker {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border:1px solid gray;
+    background-color:lightblue;
+  } */
+  
+  #marker {
+    background-image: url("https://emassi.fr/wp-content/uploads/2017/10/Map-Marker-PNG-File.png");
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .mapboxgl-popup {
+    max-width: 200px;
+  }
+  
+.card-login{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.login-container{
+  width: $container-width;
+  height: $container-height;
+  display: flex;
+}
+.field-text{
+	font-size: 5px;
+  color: $field-text-color;
+}
+.login-container-content{
+  flex: 50%;
+  background: white;
+  text-align: center;
+	display: flex;
+	align-items: center;
+	border:{
+		top-right-radius: 15px;
+		bottom-right-radius: 15px;
+	}
+	
+	& .login-form{
+		padding: 2px;
+		width: 100%;
+		// overflow: hidden;
+		& .buttonX{
+			position: absolute;
+			right: 2%;
+			top: 2%;
+			border: none;
+			background: transparent;
+			outline: none;
+		}
+		& h1{
+			letter-spacing: 1rem;
+			color: transparent;
+			-webkit-background-clip: text;
+			background-clip: text;
+			background-image: linear-gradient(45deg, #5cc272 45%, #32d47b 75%);
+			font:{
+				family: "Aguafina Script",Arial, Helvetica, sans-serif;
+			}
+		}
+		& .field{
+			margin: 10px auto;
+			padding: 5px;
+			width: 75%;
+			height: 25%;
+			display: grid;
+			grid-row-gap: 0.2rem;
+			&>label, &>input{
+				text-align: left;
+			}
+			&>label, &>a{
+				@extend .field-text;
+			}
+			&>input{
+				outline: none;
+				border:{
+					top: none;
+					left: none;
+					right: none;
+					bottom: 1px solid grey;
+				}
+				&:focus{
+					border-bottom-color: #1838e7;
+				}
+			}
+			&>a{
+				text:{
+					align: right;
+					decoration: none;
+				}
+			}
+		}
+		
+		&>.submitBtn{
+			width: 75%;
+			height: 2rem;
+			position: relative;
+			background: linear-gradient(135deg, rgba(60,231,123,1) 0%, rgba(0,142,255,1) 70%);
+			color: white;
+			outline: none;
+			border:{
+				style: none;
+				radius: 15px;
+			}
+			transition: .3s ease-in-out;
+			&:hover{
+				filter: hue-rotate(45deg);
+			}
+		}
+		
+		.parting-line{
+			position: relative;
+			margin:{
+				top: 1rem;
+				bottom: 1rem;
+				left: 2.5rem;
+				right: 2.5rem;
+			}
+			@extend .field-text;
+			overflow: hidden;
+			&::before, &::after{
+				content: '';
+				position: absolute;
+				top: 50%;
+				width: 45%;
+				display: block;
+				text-align: center;
+				border-top: 1px solid;
+			}
+			&::before{
+				right: 55%;
+			}
+			&::after{
+				right: 0%;
+			}
+		}
+	}
+}
+.login-container-img{
+  flex: 50%;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background: url('./mohammedia.jpg');
+  background-size: cover;
+	border:{
+		top-left-radius: 15px;
+		bottom-left-radius: 15px;
+	}
+	
+  &>h1{
+      display: grid;
+      text-align: center;
+      color: white;
+      margin-top: 50%;
+      padding-left: 20px;
+      padding-right: 20px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      &>span {
+          text-align: center;
+          font:{
+            size: 16px;
+          }
+      }
+  }
+}
+.container{
+	box-shadow: 0 0 15px 5px;
+	border-radius: 15px;
+}
+
+$google-icon-width: 1.5rem;
+$google-icon-height: 1.5rem;
+$google-icon-top: 0px;
+$google-icon-left: 9px;
+.google-icon{
+	position: relative;
+	max-width: 1.5rem;
+	max-height: $google-icon-width;
+	height: $google-icon-width;
+	width: $google-icon-height;
+	top: $google-icon-top;
+	left: $google-icon-left;
+	background:{
+		image: url($google-icon);
+		size: cover;
+	} 
+	z-index: 2;
+}

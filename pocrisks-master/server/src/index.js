@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { getRisksFromDb } from "./repositories/Risk.repository"
+import { signin } from "./Users/Models/AuthUser"
 
 let PORT = 8088;
 var app = express();
@@ -14,6 +15,28 @@ app.get("/",async (req, res) => {
   res.send(result);
 });
 
+app.post("/signin" , async (req, res , next) => {
+  try{
+
+    //req.body.username="ihssane"
+    //req.body.password ="ihssane"
+    console.log(res.body)
+    const result = await signin(req ,res)
+    
+    console.log("res : ",result)
+
+    res.send(result);
+    
+  }catch(err)
+  {
+    //console.log(err)
+    next(err)
+    //return res.send(res.status(403))
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log("Listening to port : ", PORT);
 });
+
