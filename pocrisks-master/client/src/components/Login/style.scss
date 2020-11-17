@@ -161,8 +161,6 @@ $google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2d
   background: url('./mohammedia.jpg');
   background-size: cover;
 	border:{
-		top-left-radius: 15px;
-		bottom-left-radius: 15px;
 	}
 	
   &>h1{
@@ -170,7 +168,7 @@ $google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2d
       text-align: center;
       color: white;
       margin-top: 50%;
-      padding-left: 20px;
+      padding-left: 10px;
       padding-right: 20px;
       letter-spacing: 2px;
       margin-bottom: 10px;

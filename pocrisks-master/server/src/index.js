@@ -2,7 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { getRisksFromDb } from "./repositories/Risk.repository"
+import { saveRisksToDb } from "./Risks/SaveRisk"
 import { signin } from "./Users/Models/AuthUser"
+
 
 let PORT = 8088;
 var app = express();
@@ -13,6 +15,11 @@ app.use(cors());
 app.get("/",async (req, res) => {
   const result = await getRisksFromDb();
   res.send(result);
+});
+
+app.post("/saveRisk", async (req, res) => {
+  console.log(req.body)
+  const result = await saveRisksToDb(req.body.description , req.body.lt , req.body.lg);
 });
 
 app.post("/signin" , async (req, res , next) => {

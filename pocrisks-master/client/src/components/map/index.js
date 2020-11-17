@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as L from "mapbox-gl";
 import { token } from "../../util/config";
-
-
+import CustomModal from '../Actions/CustomModal'
+import { makeStyles } from '@material-ui/core/styles';
 
 L.accessToken = token;
+
 
 const Map = ({ geoData }) => {
   const mapContainerRef = useRef(null);
@@ -12,11 +13,19 @@ const Map = ({ geoData }) => {
   // offset puts the popup 15px above the feature
   const popUpRef = useRef(new L.Popup({ offset: 15 }));
 
+  const [showPopUp , setShowPopUp] = useState(false)
+
+  const [ clickedPos , setclickedPos] = useState({
+    lg : 0,
+    lt : 0
+  })
   const [state, setState] = useState({
     lng: -7.3848547,
     lat: 33.6835086,
     zoom: 13,
   });
+
+  const handleShow = () => setShowPopUp(true);
 
   //HOOKS => componentDidMount
   useEffect(() => {
@@ -31,8 +40,9 @@ const Map = ({ geoData }) => {
 
     geoData &&
     geoData.features.map((e) => {
-      let pop = new L.Popup({ closeButton: false, offset: 25 }).setText(
-        "" + e.properties.descrip
+      let pop = new L.Popup({ closeButton: true, offset: 25 }).setText(
+        "*Risk :" + e.properties.descrip + '*Date of notice : '+ (e.properties.date || 'Not specified') +
+          ( window.location.pathname == '/admin/map' ? '\\n *Added By :' : '\\n' )
       );
       var el = document.createElement("div");
       el.id = "marker";
@@ -46,23 +56,22 @@ const Map = ({ geoData }) => {
     
     // add navigation control (the +/- zoom buttons)
     map.addControl(new L.NavigationControl(), 'bottom-right');
+
+
     // add popup when user clicks a point
 
-    // add new marker
-    // map.on("click", function (e) {
-    //   console.log(Object.values(e.lngLat.wrap()))
-    //   let pop = new L.Popup({ offset: 25 }).setText(
-    //     "this is a new marker"
-    //   );
-    //   var el = document.createElement("div");
-    //   el.id = "marker";
-    //   new L.Marker(el)
-    //     .setLngLat(Object.values(e.lngLat.wrap()))
-    //     .setPopup(pop)
-    //     .addTo(map);
-      
-    //       });
+    // add new marker on right click 
+    map.on("contextmenu", async function (e) {
+
+      setclickedPos({
+        lt : e.lngLat.lat , 
+        lg : e.lngLat.lng
+        })
+      handleShow()
+      console.log(clickedPos)
+      //console.log(e.lngLat)
     
+    })
             
 
     // map.on('click' , e =>
@@ -112,6 +121,7 @@ const Map = ({ geoData }) => {
   return (
     <>
       <div ref={(el) => (mapContainerRef.current = el)} className="mapbox" />
+      {showPopUp && <CustomModal lg={clickedPos.lg} lt={clickedPos.lt}  launch={showPopUp} /> }
     </>
   );
 };

@@ -14,11 +14,11 @@ export default function LoginForm(props) {
   const onSubmit = values => LoginApi.LoginApi(values)
 
 //////////////////////////////////////////////////////
-  return (
-<Card class='card-login'>
-  <div class="container">
-		<div class="login-container">
-			<div class="login-container-img">
+return (
+  <Card class='card-login'>
+    <div class="container">
+		  <div class="login-container">
+			  <div class="login-container-img">
 				<h1>LookUp Project</h1>
 			</div>
 			<div class="login-container-content">
@@ -61,6 +61,6 @@ export default function LoginForm(props) {
 			</div>
 		</div>
 	</div>
-                </Card>
-  );
+  </Card>
+);
 }
