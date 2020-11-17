@@ -7,7 +7,8 @@ $google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2d
     top: 0;
     right: 0;
     left: 0;
-    bottom: 0;
+	bottom: 0;
+	margin-top: 4.5em;
   }
   /* .mapboxgl-marker {
     width: 25px;
@@ -18,7 +19,7 @@ $google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2d
   } */
   
   #marker {
-    background-image: url("https://emassi.fr/wp-content/uploads/2017/10/Map-Marker-PNG-File.png");
+    background-image: url("../../images/dangerRed.jpeg");
     background-size: cover;
     width: 50px;
     height: 50px;
@@ -158,7 +159,7 @@ $google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2d
 .login-container-img{
   flex: 50%;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  background: url('./mohammedia.jpg');
+  background: url('../../images/mohammedia.jpg');
   background-size: cover;
 	border:{
 	}

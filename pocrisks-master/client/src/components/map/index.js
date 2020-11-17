@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as L from "mapbox-gl";
 import { token } from "../../util/config";
 import CustomModal from '../Actions/CustomModal'
-import { makeStyles } from '@material-ui/core/styles';
+
 
 L.accessToken = token;
 
@@ -11,7 +11,7 @@ const Map = ({ geoData }) => {
   const mapContainerRef = useRef(null);
 
   // offset puts the popup 15px above the feature
-  const popUpRef = useRef(new L.Popup({ offset: 15 }));
+
 
   const [showPopUp , setShowPopUp] = useState(false)
 
@@ -40,13 +40,13 @@ const Map = ({ geoData }) => {
 
     geoData &&
     geoData.features.map((e) => {
-      let pop = new L.Popup({ closeButton: true, offset: 25 }).setText(
-        "*Risk :" + e.properties.descrip + '*Date of notice : '+ (e.properties.date || 'Not specified') +
-          ( window.location.pathname == '/admin/map' ? '\\n *Added By :' : '\\n' )
+      let pop = new L.Popup({ closeButton: true, offset: 25 }).setHTML(
+        "<ul><li>Risk :" + e.properties.descrip + '</li><li>Date of notice : '+ (e.properties.date || 'Not specified') +'</li>' +
+          ( window.location.pathname === '/admin/map' ? '<li>Added By :</li>' : ' ' )
       );
       var el = document.createElement("div");
       el.id = "marker";
-      new L.Marker(el)
+      return new L.Marker(el)
         .setLngLat(e.geometry.coordinates)
         .setPopup(pop)
         .addTo(map);
