@@ -12,6 +12,7 @@
   border:1px solid gray;
   background-color:lightblue;
 } */
+table th, table td { white-space: nowrap; }
 
 #marker {
   background-image: url("https://emassi.fr/wp-content/uploads/2017/10/Map-Marker-PNG-File.png");
