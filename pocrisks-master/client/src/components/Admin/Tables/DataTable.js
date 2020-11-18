@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Button } from 'reactstrap';
+import { Table, Button, Badge } from 'reactstrap';
 import ModalForm from '../Modals/ModalForm'
 
 function DataTable(props){
@@ -29,7 +29,11 @@ function DataTable(props){
         <th scope="row">{item.id}</th>
         <td>{item.username}</td>
         <td>{item.email}</td>
-        <td>{item.admin}</td>
+        
+        <td>{item.admin ?
+             <Badge  color="success">YES</Badge> 
+             : <Badge  color="danger">NO</Badge>
+             }</td>
     
         <td>
           <div style={{width:"110px"}}>
