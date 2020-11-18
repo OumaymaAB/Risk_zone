@@ -5,9 +5,10 @@ import cors from "cors";
 import helmet from "helmet"
 import morgan from "morgan"
 import { getRisksFromDb } from "./repositories/Risk.repository"
-import { main } from "./controllers/"
+
 import { saveRisksToDb } from "./Risks/SaveRisk"
 import { signin } from "./Users/Models/AuthUser"
+import { deleteTableData, getTableData, postTableData, putTableData } from "./controllers";
 
 
 let PORT = 8088;
@@ -45,10 +46,10 @@ const corsOptions = {
 }
 
 // App Routes - Auth
-app.get('/crud', (req, res) => main.getTableData(req, res, db))
-app.post('/crud', (req, res) => main.postTableData(req, res, db))
-app.put('/crud', (req, res) => main.putTableData(req, res, db))
-app.delete('/crud', (req, res) => main.deleteTableData(req, res, db))
+app.get('/crud', (req, res) => getTableData(req, res, db))
+app.post('/crud', (req, res) => postTableData(req, res, db))
+app.put('/crud', (req, res) => putTableData(req, res, db))
+app.delete('/crud', (req, res) => deleteTableData(req, res, db))
 
 
 
