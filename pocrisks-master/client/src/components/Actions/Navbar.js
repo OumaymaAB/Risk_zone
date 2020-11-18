@@ -13,7 +13,7 @@ return(
     <Navbar.Brand href="#home">LookUp Project</Navbar.Brand>
     <Nav className="mr-auto">
       <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#users">Users</Nav.Link>
+      <Nav.Link href="/admin/users">Users</Nav.Link>
       <Nav.Link href="#pricing">Map</Nav.Link>
       <Nav.Link href="#account">Account</Nav.Link>
     </Nav>

@@ -5,6 +5,7 @@ import { Router, Route, Switch } from "react-router-dom";
 import  App  from './App'
 import LoginForm from './components/Login'
 import CustomModal from './components/Actions/CustomModal'
+import UsersPage from "pages/UsersPage";
 
 
 var hist = createBrowserHistory();
@@ -14,6 +15,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/map" component={App} />
       <Route path="/admin/map" component={App} />
+      <Route path="/admin/users" component={UsersPage} />
       <Route path="/client/map" component={App} />
       <Route path="/modal" component={CustomModal} />
       <Route path="/" component={LoginForm} />
