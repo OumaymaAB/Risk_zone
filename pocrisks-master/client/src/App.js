@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Map from "./components/map/index";
 import { getGeoData } from "./service/geodata";
+import CustomNavbar from './components/Actions/Navbar'
 import "./style.css";
-import { Container, Row, Col } from 'reactstrap'
-import ModalForm from './components/map/Modals/ModalForm'
-import DataTable from './components/map/Tables/DataTable'
-import UsersList from "./components/Admin/users";
 // import {getItems } from './components/Admin/index'
 
 const App = () => {
@@ -27,14 +24,10 @@ const App = () => {
   // };
 
   return (
-  
-     <div>
-       <UsersList />
-        {/* <Map geoData={geoData} /> */}
-      </div> 
-      
-  
-   
+    <>
+    <CustomNavbar/>
+    <Map geoData={geoData} />
+    </>
   );
 };
 

@@ -1,22 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as L from "mapbox-gl";
 import { token } from "../../util/config";
-import 'bootstrap/dist/css/bootstrap.min.css'
-
+import CustomModal from '../Actions/CustomModal'
 
 
 L.accessToken = token;
 
+
 const Map = ({ geoData }) => {
   const mapContainerRef = useRef(null);
-  const {show, setShow} = useState(true);
-  const closeModalHandler = () => setShow(false);  
 
+  // offset puts the popup 15px above the feature
+
+
+  const [showPopUp , setShowPopUp] = useState(false)
+
+  const [ clickedPos , setclickedPos] = useState({
+    lg : 0,
+    lt : 0
+  })
   const [state, setState] = useState({
     lng: -7.3848547,
     lat: 33.6835086,
     zoom: 13,
   });
+
+  const handleShow = () => setShowPopUp(true);
 
   //HOOKS => componentDidMount
   useEffect(() => {
@@ -29,16 +38,13 @@ const Map = ({ geoData }) => {
 
     geoData &&
     geoData.features.map((e) => {
-      const content = e.properties.descrip;
-      let pop = new L.Popup({ closeButton: false, offset: 25 })
-      .setText("" + e.properties.descrip)
-      .setHTML(`
-       <p>${content}</p>
-       <img src='1.jpg' width="150" height="150"/>
-      `)
+      let pop = new L.Popup({ closeButton: true, offset: 25 }).setHTML(
+        "<ul><li>Risk :" + e.properties.descrip + '</li><li>Date of notice : '+ (e.properties.date || 'Not specified') +'</li>' +
+          ( window.location.pathname === '/admin/map' ? '<li>Added By :</li>' : ' ' )
+      );
       var el = document.createElement("div");
       el.id = "marker";
-      new L.Marker(el)
+      return new L.Marker(el)
         .setLngLat(e.geometry.coordinates)
         .setPopup(pop)
         .addTo(map);
@@ -48,48 +54,23 @@ const Map = ({ geoData }) => {
     
     // add navigation control (the +/- zoom buttons)
     map.addControl(new L.NavigationControl(), 'bottom-right');
+
+
     // add popup when user clicks a point
 
-    // // add new marker
-    // map.on("click", function (e) {
-    //   console.log(Object.values(e.lngLat.wrap()))
-    //   let pop = new L.Popup({ offset: 25 }).setText(
-    //     "this is a new marker"
-    //   );
-    //   var el = document.createElement("div");
-    //   el.id = "marker";
-    //   new L.Marker(el)
-    //     .setLngLat(Object.values(e.lngLat.wrap()))
-    //     .setPopup(pop)
-    //     .addTo(map);
-      
-    //       });
+    // add new marker on right click 
+    map.on("contextmenu", async function (e) {
 
-    //display Modal
-    // map.on("click", e => {
+      setclickedPos({
+        lt : e.lngLat.lat , 
+        lg : e.lngLat.lng
+        })
+      handleShow()
+      console.log(clickedPos)
+      //console.log(e.lngLat)
     
-    //   let pop = new L.Popup({ offset: 25 }).setText(
-    //     "this is a new marker"
-    //   );
-    //   var el = document.createElement("div");
-    //    el.id = "marker";
-    //   new L.Point(el)
-    //   .setLngLat(Object.values(e.lngLat.wrap()))
-    //   .setPopup(pop);
-    // //   var el = document.createElement("div");
-    // //   el.id = "marker";
-    // //   new L.Marker(el)
-    // //     .setLngLat(Object.values(e.lngLat.wrap()))
-    // //     .setPopup(pop)
-    // //     .addTo(map);
-    //     // <Modal show={show} closeModalHandler={closeModalHandler} />
-    //     console.log("Clicked");
-    // });
-          
-    map.on('click', function(e) {
-      // $('#mymodal').modal('show');
-      console.log("map Clicked");
-    });
+    })
+            
 
     // map.on('click' , e =>
     // {
@@ -139,11 +120,7 @@ const Map = ({ geoData }) => {
   return (
     <>
       <div ref={(el) => (mapContainerRef.current = el)} className="mapbox" />
-      {/* <div>
-      { show ? <div onClick={closeModalHandler} className="back-drop"></div> : null }
-      <button onClick={() => setShow(true)} className="btn-openModal">Open Modal</button>
-      <Modal show={show} close={closeModalHandler} />
-    </div> */}
+      {showPopUp && <CustomModal lg={clickedPos.lg} lt={clickedPos.lt}  launch={showPopUp} /> }
     </>
   );
 };

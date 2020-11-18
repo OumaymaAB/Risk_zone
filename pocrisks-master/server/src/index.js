@@ -6,6 +6,9 @@ import helmet from "helmet"
 import morgan from "morgan"
 import { getRisksFromDb } from "./repositories/Risk.repository"
 import { main } from "./controllers/"
+import { saveRisksToDb } from "./Risks/SaveRisk"
+import { signin } from "./Users/Models/AuthUser"
+
 
 let PORT = 8088;
 var app = express();
@@ -57,6 +60,33 @@ app.get("/",async (req, res) => {
   res.send(result);
 });
 
+app.post("/saveRisk", async (req, res) => {
+  console.log(req.body)
+  const result = await saveRisksToDb(req.body.description , req.body.lt , req.body.lg);
+});
+
+app.post("/signin" , async (req, res , next) => {
+  try{
+
+    //req.body.username="ihssane"
+    //req.body.password ="ihssane"
+    console.log(res.body)
+    const result = await signin(req ,res)
+    
+    console.log("res : ",result)
+
+    res.send(result);
+    
+  }catch(err)
+  {
+    //console.log(err)
+    next(err)
+    //return res.send(res.status(403))
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log("Listening to port : ", PORT);
 });
+
