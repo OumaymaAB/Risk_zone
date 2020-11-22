@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { useForm, Controller } from "react-hook-form";
 import Input from 'react-input-ui/collection/nao';
 import addRiskApi from '../../util/addRiskApi'
@@ -7,9 +7,15 @@ import addRiskApi from '../../util/addRiskApi'
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getTypes } from "service/riskTypes.service";
-import { InputLabel, MenuItem, Select } from "@material-ui/core";
+import { InputLabel, MenuItem, Select, Button } from "@material-ui/core";
 
 export default function CustomModal({ launch, lg, lt }) {
+  // handle images
+  const [image, setImage] = useState(null);
+  const handleImageChange = (e) => {
+    console.log("handleImageChange ", e.target.files[0])
+    setImage(e.target.files[0])
+  }
   // launch = true
   const [show, setShow] = useState(launch);
   // risk types state
@@ -36,21 +42,31 @@ export default function CustomModal({ launch, lg, lt }) {
   const { control, handleSubmit } = useForm();
 
   const onSubmit = values => {
+    // handle image before submit
+    
+    console.log("values ", values)
+    const formData = new FormData();
+    formData.append('image', image);
+    Object.keys(values).forEach((key) =>{
+    console.log("append ",key, values[key])
+    key !== "file" && formData.append(key, values[key])}
+    )
+
     //console.log(values)
-    addRiskApi.addRiskApi(values).then((res) => {
-      if(res.data.success){
+    addRiskApi.addRiskApi(formData).then((res) => {
+      if (res.data.success) {
         // added succesfully
       }
-      else{
+      else {
         // error while adding a new risk
       }
-    } ).catch(() => {
+    }).catch(() => {
       // error 404/ 500
       // unknown error 
       // something went wrong
-    } )
+    })
     // console.log("launch=", aunch)
-    window.location.reload()
+    // window.location.reload()
   }
 
 
@@ -103,7 +119,7 @@ export default function CustomModal({ launch, lg, lt }) {
             <p class="field">
 
               {/*/// password input : */}
-           
+
               <Controller
                 as={
                   <Input
@@ -119,25 +135,49 @@ export default function CustomModal({ launch, lg, lt }) {
             </p>
 
             <p class="field">
-             <InputLabel id="risk-type">Type</InputLabel> 
+              <InputLabel id="risk-type">Type</InputLabel>
               {/*/// types select : */}
               <Controller
                 as={
                   <Select
-                  labelId="risk-type"
-                  
+                    labelId="risk-type"
+
                     name="type"
-                    
+
                   >
                     {
-                      riskTypes.length > 0 && riskTypes.map((elem, index) => 
-                      <MenuItem value={elem.id} key={index}>
-                        {elem.type}
-                      </MenuItem>)
+                      riskTypes.length > 0 && riskTypes.map((elem, index) =>
+                        <MenuItem value={elem.id} key={index}>
+                          {elem.type}
+                        </MenuItem>)
                     }
                   </Select>
                 }
                 name="type"
+                control={control}
+                defaultValue={lt}
+              />
+            </p>
+            <p class="field">
+              <InputLabel id="risk-image">Image</InputLabel>
+              {/*/// types select : */}
+              <Controller
+                as={
+                  <Button
+                    variant="contained"
+                    component="label"
+                  >
+                    Upload File
+                     <input
+                      type="file"
+                      onChange={
+                        handleImageChange
+                      }
+                      hidden
+                    />
+                  </Button>
+                }
+                name="file"
                 control={control}
                 defaultValue={lt}
               />

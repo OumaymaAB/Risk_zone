@@ -5,11 +5,23 @@ import cors from "cors";
 import helmet from "helmet"
 import morgan from "morgan"
 import { getRisksFromDb } from "./repositories/Risk.repository"
-
-import { getAllTypes, saveRisksToDb } from "./Risks/SaveRisk"
+import path from 'path';
+import { getAllTypes, saveRisksToDb, saveImageToDb } from "./Risks/SaveRisk"
 import { signin } from "./Users/Models/AuthUser"
 import { deleteTableData, getTableData, postTableData, putTableData } from "./controllers";
+import  multer from "multer";
 
+let storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) => {
+    let name = 'Risk-'+Date.now()+"."+file.originalname.split(".")[1];
+    cb(null, name);
+
+  }
+})
+let upload = multer({
+  storage: storage
+}).single("image");
 
 let PORT = 8088;
 var app = express();
@@ -61,10 +73,16 @@ app.get("/",async (req, res) => {
   res.send(result);
 });
 
-app.post("/saveRisk", async (req, res) => {
-  console.log(req.body)
-  const {description, lt, lg, type} = req.body;
-  const afftectedRows = await saveRisksToDb(description , lt , lg, type);
+app.post("/saveRisk", upload, async (req, res) => {
+  const {risk: description, lt, lg, type} = req.body;
+  //instert image in the db
+  console.log("file ", req.file)
+  let insertedImage = null;
+  if(req.file)
+    insertedImage = await saveImageToDb(req.file.filename)
+  //insert risk
+  
+  const afftectedRows = await saveRisksToDb(description ,parseFloat(lt) ,parseFloat(lg), type, insertedImage);
   if(afftectedRows === 1)
     return res.json({
       success: true,

@@ -1,20 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 import { API_HOST } from "../util/config";
 
-const URL = API_HOST+"saveRisk"
+const URL = API_HOST + "saveRisk";
 
 const addRiskApi = {
-
-    addRiskApi: function(values){
-
-        return axios.post(URL, {
-          lt: values.lt,
-          lg: values.lg,
-          description: values.risk,
-          type: values.type
-        });
-
-    }
-}
+  addRiskApi: function (data) {
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    return axios.post(URL, data, config);
+  },
+};
 
 export default addRiskApi;
