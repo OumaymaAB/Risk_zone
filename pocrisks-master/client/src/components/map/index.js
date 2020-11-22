@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as L from "mapbox-gl";
 import { token } from "../../util/config";
-import CustomModal from '../Actions/CustomModal'
-
+import CustomModal from "../Actions/CustomModal";
+import { markerHelper } from "util/helpers";
 
 L.accessToken = token;
-
 
 const Map = ({ geoData }) => {
   const mapContainerRef = useRef(null);
 
   // offset puts the popup 15px above the feature
 
+  const [showPopUp, setShowPopUp] = useState(false);
 
-  const [showPopUp , setShowPopUp] = useState(false)
-
-  const [ clickedPos , setclickedPos] = useState({
-    lg : 0,
-    lt : 0
-  })
+  const [clickedPos, setclickedPos] = useState({
+    lg: 0,
+    lt: 0,
+  });
   const [state, setState] = useState({
     lng: -7.3848547,
     lat: 33.6835086,
@@ -31,46 +29,50 @@ const Map = ({ geoData }) => {
   useEffect(() => {
     const map = new L.Map({
       container: mapContainerRef.current,
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/mapbox/satellite-v8",
       center: [state.lng, state.lat],
       zoom: state.zoom,
-    });   
+    });
 
     geoData &&
-    geoData.features.map((e) => {
-      let pop = new L.Popup({ closeButton: true, offset: 25 }).setHTML(
-        "<ul><li>Risk :" + e.properties.descrip + '</li><li>Date of notice : '+ (e.properties.date || 'Not specified') +'</li>' +
-          ( window.location.pathname === '/admin/map' ? '<li>Added By :</li>' : ' ' )
-      );
-      var el = document.createElement("div");
-      el.id = "marker";
-      return new L.Marker(el)
-        .setLngLat(e.geometry.coordinates)
-        .setPopup(pop)
-        .addTo(map);
-       
-    });
-    
-    
-    // add navigation control (the +/- zoom buttons)
-    map.addControl(new L.NavigationControl(), 'bottom-right');
+      geoData.features.map((e) => {
+        let pop = new L.Popup({ closeButton: true, offset: 25 }).setHTML(
+          "<li>Risk : " +
+            e.properties.description +
+            "</li><li>Date of notice : " +
+            (e.properties.date || "Not specified") +
+            "</li>" +
+            "<li>Type : " +
+            e.properties.type +
+            "</li>" +
+            (window.location.pathname === "/admin/map"
+              ? "<li>Added By :</li>"
+              : " ")
+              + (e.properties.name ? `<img src="http://localhost:8088/${e.properties.name}" alt="img"/>` : "")
+        );
+        var el = document.createElement("div");
+        el.id = markerHelper(e.properties.type_id);
+        return new L.Marker(el)
+          .setLngLat(e.geometry.coordinates)
+          .setPopup(pop)
+          .addTo(map);
+      });
 
+    // add navigation control (the +/- zoom buttons)
+    map.addControl(new L.NavigationControl(), "bottom-right");
 
     // add popup when user clicks a point
 
-    // add new marker on right click 
+    // add new marker on right click
     map.on("contextmenu", async function (e) {
-
       setclickedPos({
-        lt : e.lngLat.lat , 
-        lg : e.lngLat.lng
-        })
-      handleShow()
-      console.log(clickedPos)
+        lt: e.lngLat.lat,
+        lg: e.lngLat.lng,
+      });
+      handleShow();
+      console.log(clickedPos);
       //console.log(e.lngLat)
-    
-    })
-            
+    });
 
     // map.on('click' , e =>
     // {
@@ -116,11 +118,12 @@ const Map = ({ geoData }) => {
     // });
   });
 
-  
   return (
     <>
       <div ref={(el) => (mapContainerRef.current = el)} className="mapbox" />
-      {showPopUp && <CustomModal lg={clickedPos.lg} lt={clickedPos.lt}  launch={showPopUp} /> }
+      {showPopUp && (
+        <CustomModal lg={clickedPos.lg} lt={clickedPos.lt} launch={showPopUp} />
+      )}
     </>
   );
 };
