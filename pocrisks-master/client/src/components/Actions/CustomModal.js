@@ -19,7 +19,6 @@ export default function CustomModal({ launch, lg, lt }) {
     // select types
     getTypes()
       .then((res) => {
-       
         if (res.data.success)
           setRiskTypes(res.data.types)
         else
@@ -133,7 +132,7 @@ export default function CustomModal({ launch, lg, lt }) {
                     {
                       riskTypes.length > 0 && riskTypes.map((elem, index) => 
                       <MenuItem value={elem.id} key={index}>
-                        {elem.description}
+                        {elem.type}
                       </MenuItem>)
                     }
                   </Select>
