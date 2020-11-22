@@ -26,6 +26,34 @@ $google-icon: 'data:image/svg+xml;base64,PHN2ZyBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2d
     border-radius: 50%;
     cursor: pointer;
   }
+  #marker-red {
+    background-image: url("../../images/marker-red.png");
+    background-size: cover;
+	width: 40px;
+	height: 54px;
+    cursor: pointer;
+  }
+  #marker-blue {
+    background-image: url("../../images/marker-blue.png");
+    background-size: cover;
+	width: 40px;
+	height: 54px;
+    cursor: pointer;
+  }
+  #marker-orange {
+    background-image: url("../../images/marker-orange.png");
+    background-size: cover;
+	width: 40px;
+	height: 54px;
+    cursor: pointer;
+  }
+  #marker-green {
+    background-image: url("../../images/marker-green.png");
+    background-size: cover;
+	width: 40px;
+	height: 54px;
+    cursor: pointer;
+  }
   .mapboxgl-popup {
     max-width: 200px;
   }
