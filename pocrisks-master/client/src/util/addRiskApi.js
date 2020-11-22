@@ -10,12 +10,9 @@ const addRiskApi = {
         return axios.post(URL, {
           lt: values.lt,
           lg: values.lg,
-          description: values.risk
-        })
-        .then( res => {
-          console.log("result=" , res.data)
-        })
-        .catch(error => console.log("error ", values))
+          description: values.risk,
+          type: values.type
+        });
 
     }
 }

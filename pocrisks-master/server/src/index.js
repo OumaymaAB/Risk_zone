@@ -6,7 +6,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 import { getRisksFromDb } from "./repositories/Risk.repository"
 
-import { saveRisksToDb } from "./Risks/SaveRisk"
+import { getAllTypes, saveRisksToDb } from "./Risks/SaveRisk"
 import { signin } from "./Users/Models/AuthUser"
 import { deleteTableData, getTableData, postTableData, putTableData } from "./controllers";
 
@@ -63,7 +63,18 @@ app.get("/",async (req, res) => {
 
 app.post("/saveRisk", async (req, res) => {
   console.log(req.body)
-  const result = await saveRisksToDb(req.body.description , req.body.lt , req.body.lg);
+  const {description, lt, lg, type} = req.body;
+  const afftectedRows = await saveRisksToDb(description , lt , lg, type);
+  if(afftectedRows === 1)
+    return res.json({
+      success: true,
+      message: "Risk added!"
+    })
+  return res.json({
+      success: false,
+      message: "Error while adding a risk!"
+    })
+  
 });
 
 app.post("/signin" , async (req, res , next) => {
@@ -86,6 +97,22 @@ app.post("/signin" , async (req, res , next) => {
   }
 });
 
+// select risk types
+app.get("/types",async (req, res) => {
+
+  const result = await getAllTypes();
+
+  if(result && result.length > 0)
+      return res.json({
+        success: true,
+        types: result
+      });
+
+  return res.json({
+    success: false,
+    message: "Error fetching types"
+  })
+});
 
 app.listen(PORT, () => {
   console.log("Listening to port : ", PORT);
