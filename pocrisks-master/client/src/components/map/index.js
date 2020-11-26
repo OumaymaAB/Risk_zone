@@ -47,8 +47,13 @@ const Map = ({ geoData }) => {
             "</li>" +
             (window.location.pathname === "/admin/map"
               ? "<li>Added By :</li>"
-              : " ")
-              + (e.properties.name ? `<img src="http://localhost:8088/${e.properties.name}" alt="img"/>` : "")
+              : " ") +
+            (e.properties.name
+              ? `<img src="http://localhost:8088/${e.properties.name}" 
+                style="
+               height: 190px;
+               width: 220px; alt="img"/>`
+              : "")
         );
         var el = document.createElement("div");
         el.id = markerHelper(e.properties.type_id);
