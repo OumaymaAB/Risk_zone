@@ -132,6 +132,8 @@ app.get("/types",async (req, res) => {
   })
 });
 
+app.use(express.static('uploads'));
+
 app.listen(PORT, () => {
   console.log("Listening to port : ", PORT);
 });
