@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from 'react-bootstrap'
 import { useForm, Controller } from "react-hook-form";
 import Input from 'react-input-ui/collection/nao';
@@ -84,7 +84,7 @@ export default function CustomModal({ launch, lg, lt }) {
             <Modal.Title>Add new Risk</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p class="field">
+            <p className="field">
 
               {/*//// email or identifier input :::*/}
               <Controller
@@ -99,7 +99,7 @@ export default function CustomModal({ launch, lg, lt }) {
                 control={control}
               />
             </p>
-            <p class="field">
+            <p className="field">
 
               {/*//// email or identifier input :::*/}
               <Controller
@@ -116,7 +116,7 @@ export default function CustomModal({ launch, lg, lt }) {
               />
             </p>
 
-            <p class="field">
+            <p className="field">
 
               {/*/// password input : */}
 
@@ -134,7 +134,7 @@ export default function CustomModal({ launch, lg, lt }) {
               />
             </p>
 
-            <p class="field">
+            <p className="field">
               <InputLabel id="risk-type">Type</InputLabel>
               {/*/// types select : */}
               <Controller
@@ -158,7 +158,7 @@ export default function CustomModal({ launch, lg, lt }) {
                 defaultValue={lt}
               />
             </p>
-            <p class="field">
+            <p className="field">
               <InputLabel id="risk-image">Image</InputLabel>
               {/*/// types select : */}
               <Controller
