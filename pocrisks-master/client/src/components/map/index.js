@@ -36,6 +36,7 @@ const Map = ({ geoData }) => {
 
     geoData &&
       geoData.features.map((e) => {
+        
         let pop = new L.Popup({ closeButton: true, offset: 25 }).setHTML(
           "<li>Risk : " +
             e.properties.description +
@@ -46,7 +47,7 @@ const Map = ({ geoData }) => {
             e.properties.type +
             "</li>" +
             (window.location.pathname === "/admin/map"
-              ? "<li>Added By :</li>"
+              ? `<li>Added By : ${e.properties.username}</li>`
               : " ") +
             (e.properties.name
               ? `<img src="http://localhost:8088/${e.properties.name}" 

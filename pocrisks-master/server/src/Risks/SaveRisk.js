@@ -1,14 +1,15 @@
 import { client } from "../db/connect";
 
-export const saveRisksToDb = async (description, lt, lg, type, image_id) => {
+export const saveRisksToDb = async (description, lt, lg, type, username, image_id) => {
   const rs = await client.query(
-    "INSERT INTO risque ( description , geom , date, type_id, image_id ) VALUES ( $1, $2 , $3, $4, $5)",
+    "INSERT INTO risque ( description , geom , date, type_id, image_id, username ) VALUES ( $1, $2 , $3, $4, $5, $6)",
     [
       description,
       " POINT(" + lg.toFixed(3) + " " + lt.toFixed(3) + " )",
       new Date(),
       type,
-      image_id
+      image_id,
+      username
     ]
   );
   return rs.rowCount;

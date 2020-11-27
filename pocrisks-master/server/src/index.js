@@ -74,7 +74,7 @@ app.get("/",async (req, res) => {
 });
 
 app.post("/saveRisk", upload, async (req, res) => {
-  const {risk: description, lt, lg, type} = req.body;
+  const {risk: description, lt, lg, type, username} = req.body;
   //instert image in the db
   console.log("file ", req.file)
   let insertedImage = null;
@@ -82,7 +82,7 @@ app.post("/saveRisk", upload, async (req, res) => {
     insertedImage = await saveImageToDb(req.file.filename)
   //insert risk
   
-  const afftectedRows = await saveRisksToDb(description ,parseFloat(lt) ,parseFloat(lg), type, insertedImage);
+  const afftectedRows = await saveRisksToDb(description ,parseFloat(lt) ,parseFloat(lg), type, username, insertedImage);
   if(afftectedRows === 1)
     return res.json({
       success: true,

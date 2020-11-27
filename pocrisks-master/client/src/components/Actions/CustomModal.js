@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal } from 'react-bootstrap'
 import { useForm, Controller } from "react-hook-form";
 import Input from 'react-input-ui/collection/nao';
@@ -8,8 +8,10 @@ import addRiskApi from '../../util/addRiskApi'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getTypes } from "service/riskTypes.service";
 import { InputLabel, MenuItem, Select, Button } from "@material-ui/core";
+import { Context } from "util/useAuth";
 
 export default function CustomModal({ launch, lg, lt }) {
+  const { context } = useContext(Context);
   // handle images
   const [image, setImage] = useState(null);
   const handleImageChange = (e) => {
@@ -47,6 +49,7 @@ export default function CustomModal({ launch, lg, lt }) {
     console.log("values ", values)
     const formData = new FormData();
     formData.append('image', image);
+    context.isLogged && formData.append('username', context.user.username);
     Object.keys(values).forEach((key) =>{
     console.log("append ",key, values[key])
     key !== "file" && formData.append(key, values[key])}
@@ -66,7 +69,7 @@ export default function CustomModal({ launch, lg, lt }) {
       // something went wrong
     })
     // console.log("launch=", aunch)
-    // window.location.reload()
+     window.location.reload()
   }
 
 
